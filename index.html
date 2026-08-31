@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Varsha! 🎂✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Caveat:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary-yellow: #fff3a1;
+      --stripe-yellow: #ffe670;
+      --lavender-bg: #c5b4e3;
+      --text-brown: #5a3825;
+      --accent-pink: #ff6b81;
+      --purple-accent: #9b72cf;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: radial-gradient(circle at center, #f5efff 0%, #ded0ee 100%);
+      font-family: 'Fredoka', sans-serif;
+      padding: 15px;
+      overflow-x: hidden;
+    }
+
+    /* Floating Heart FX */
+    .floating-heart {
+      position: fixed;
+      font-size: 22px;
+      pointer-events: none;
+      animation: floatUp 1.2s ease-out forwards;
+      z-index: 999;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-70px) scale(1.4); opacity: 0; }
+    }
+
+    /* Main Container */
+    .card-wrapper {
+      position: relative;
+      width: 920px;
+      max-width: 95vw;
+      height: 600px;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 20px 45px rgba(90, 56, 37, 0.15), 0 0 0 10px #ffffff;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Left Illustrated Side */
+    .left-section {
+      flex: 1.15;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--primary-yellow),
+        var(--primary-yellow) 26px,
+        var(--stripe-yellow) 26px,
+        var(--stripe-yellow) 52px
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    .star {
+      position: absolute;
+      font-size: 24px;
+      user-select: none;
+    }
+    .star-1 { top: 30px; left: 35px; color: #ffbe3b; }
+    .star-2 { top: 35px; right: 40px; color: #ff9f43; }
+    .star-3 { bottom: 40px; left: 45px; color: #54a0ff; }
+    .star-4 { bottom: 120px; right: 25px; color: #1dd1a1; }
+
+    /* Snoopy Scalloped Badge */
+    .snoopy-badge {
+      width: 290px;
+      height: 290px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12));
+    }
+
+    .scallop-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #bfa9e3;
+      border-radius: 50%;
+      border: 6px dashed #ffffff;
+    }
+
+    .inner-circle {
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 5px solid #d4c5eb;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    /* Snoopy Cartoon Artwork */
+    .snoopy-svg {
+      width: 170px;
+      height: 170px;
+    }
+
+    /* Right Keypad */
+    .right-section {
+      flex: 1;
+      background: linear-gradient(135deg, #cbb6ea 0%, #b89fdf 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      position: relative;
+    }
+
+    .passcode-header {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .pin-display-wrapper {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .pin-box {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.35);
+      border: 2.5px solid #ffffff;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      color: var(--text-brown);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .pin-box.filled {
+      background: #ffffff;
+      transform: scale(1.08);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px 20px;
+    }
+
+    .num-btn {
+      width: 60px;
+      height: 60px;
+      background: #ffffff;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-brown);
+      cursor: pointer;
+      box-shadow: 0 5px 0 #ded2f3, 0 8px 12px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      transition: all 0.1s ease;
+    }
+
+    .num-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #ded2f3, 0 3px 5px rgba(0,0,0,0.1);
+    }
+
+    @keyframes shakeAnimation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    .shake { animation: shakeAnimation 0.4s ease; }
+
+    /* Screen Views Overlay System */
+    .overlay-view {
+      position: absolute;
+      inset: 0;
+      background: #fffdf7;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 20px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    .overlay-view.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: scale(1);
+    }
+
+    /* Controls Bar */
+    .music-bar {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: #f1e4fa;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #7b4eb3;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #d5b9f3;
+      z-index: 20;
+    }
+
+    .step-bar {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      display: flex;
+      gap: 6px;
+      z-index: 20;
+    }
+
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e2d3f5;
+    }
+
+    .step-dot.active {
+      background: var(--accent-pink);
+      transform: scale(1.2);
+    }
+
+    /* Screen 1: Letter Card */
+    .letter-card {
+      background: #ffffff;
+      border: 3px solid #eedbf5;
+      border-radius: 20px;
+      padding: 22px 20px;
+      max-width: 620px;
+      box-shadow: 0 10px 25px rgba(184, 159, 223, 0.2);
+    }
+
+    .letter-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: #9b72cf;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .greeting-title {
+      font-size: 28px;
+      color: var(--accent-pink);
+      margin-bottom: 8px;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 500px;
+      margin: 10px 0 14px 0;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 8%;
+      right: 8%;
+      height: 3px;
+      background: #ecdff8;
+      z-index: 1;
+    }
+
+    .milestone {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 2px solid #ecdff8;
+      font-size: 12px;
+      font-weight: 700;
+      color: #7b4eb3;
+    }
+
+    .greeting-message {
+      font-size: 15px;
+      color: #55443d;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .greeting-quote {
+      font-family: 'Caveat', cursive;
+      font-size: 23px;
+      color: #8c68b8;
+      margin-bottom: 16px;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Fredoka', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+      transition: transform 0.2s;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Screen 2: Balloons */
+    .balloons-area {
+      display: flex;
+      gap: 20px;
+      margin: 25px 0 15px 0;
+      justify-content: center;
+    }
+
+    .balloon {
+      width: 70px;
+      height: 90px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      animation: floatBalloon 2.5s infinite ease-in-out alternate;
+      box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 0 10px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .balloon:hover { transform: scale(1.1) !important; }
+
+    .b1 { background: #ff7675; animation-delay: 0s; }
+    .b2 { background: #74b9ff; animation-delay: 0.4s; }
+    .b3 { background: #a29bfe; animation-delay: 0.8s; }
+    .b4 { background: #55efc4; animation-delay: 1.2s; }
+
+    @keyframes floatBalloon {
+      0% { transform: translateY(0px) rotate(-2deg); }
+      100% { transform: translateY(-16px) rotate(2deg); }
+    }
+
+    .balloon.popped {
+      visibility: hidden;
+      transform: scale(0);
+    }
+
+    .balloon-msg {
+      min-height: 48px;
+      font-family: 'Caveat', cursive;
+      font-size: 24px;
+      color: #7b4eb3;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    /* Screen 3: Receipt */
+    .receipt-box {
+      background: #fffdf9;
+      border: 2px dashed #bfa9e3;
+      border-radius: 12px;
+      padding: 16px 20px;
+      width: 380px;
+      font-family: 'Space Mono', monospace;
+      text-align: left;
+      font-size: 12px;
+      color: #444;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+      margin-bottom: 14px;
+    }
+
+    .receipt-header {
+      text-align: center;
+      font-weight: bold;
+      font-size: 15px;
+      border-bottom: 1px dashed #bbb;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .receipt-total {
+      border-top: 1px dashed #bbb;
+      padding-top: 6px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Screen 4: Birthday Cake */
+    .cake-container {
+      cursor: pointer;
+      margin: 15px 0;
+      user-select: none;
+    }
+
+    .candle-flame {
+      font-size: 32px;
+      display: inline-block;
+      animation: flicker 0.6s infinite alternate;
+      transition: opacity 0.3s;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.15) rotate(2deg); }
+    }
+
+    .candle-flame.out { opacity: 0; }
+
+    /* Screen 5: Photo Gallery */
+    .gallery-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .polaroid-frame {
+      background: white;
+      padding: 10px 10px 20px 10px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border: 1px solid #eee;
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s ease;
+    }
+
+    .polaroid-img {
+      width: 290px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      background: #f0f0f0;
+    }
+
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 21px;
+      color: #555;
+      margin-top: 8px;
+      text-align: center;
+      max-width: 290px;
+    }
+
+    .nav-arrow {
+      background: #ffffff;
+      border: 2px solid #ecdff8;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #8c68b8;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      margin-top: 12px;
+      background: transparent;
+      border: none;
+      color: #8c68b8;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop src="Pesamale1.mp3" preload="auto"></audio>
+
+  <div class="card-wrapper">
+
+    <div class="step-bar" id="stepBar" style="display: none;">
+      <div class="step-dot active" id="dot1"></div>
+      <div class="step-dot" id="dot2"></div>
+      <div class="step-dot" id="dot3"></div>
+      <div class="step-dot" id="dot4"></div>
+      <div class="step-dot" id="dot5"></div>
+    </div>
+
+    <div class="music-bar" id="musicBar" style="display: none;" onclick="toggleAudio()">
+      🎵 <span id="musicStatus">Play Music</span>
+    </div>
+
+    <div class="left-section">
+      <span class="star star-1">★</span>
+      <span class="star star-2">★</span>
+      <span class="star star-3">★</span>
+      <span class="star star-4">★</span>
+
+      <div class="snoopy-badge">
+        <div class="scallop-bg"></div>
+        <div class="inner-circle">
+          <svg class="snoopy-svg" viewBox="0 0 200 200">
+            <circle cx="100" cy="70" r="18" fill="#f8a5c2" stroke="#2c3e50" stroke-width="2"/>
+            <circle cx="80" cy="65" r="16" fill="#f78fb3" stroke="#2c3e50" stroke-width="2"/>
+            <circle cx="120" cy="65" r="16" fill="#e77f67" stroke="#2c3e50" stroke-width="2"/>
+            <circle cx="100" cy="50" r="14" fill="#fed330" stroke="#2c3e50" stroke-width="2"/>
+            
+            <circle cx="130" cy="75" r="7" fill="#fed330" stroke="#2c3e50" stroke-width="1.5"/>
+            <path d="M136 75 L142 77 L136 79 Z" fill="#fa8231"/>
+            
+            <ellipse cx="100" cy="115" rx="34" ry="24" fill="#ffffff" stroke="#2c3e50" stroke-width="3.5"/>
+            <ellipse cx="128" cy="112" rx="10" ry="7.5" fill="#2c3e50"/>
+            <circle cx="106" cy="108" r="3.5" fill="#2c3e50"/>
+            <ellipse cx="76" cy="122" rx="10" ry="19" fill="#2c3e50" transform="rotate(-15 76 122)"/>
+            
+            <ellipse cx="90" cy="135" rx="11" ry="6" fill="#ffffff" stroke="#2c3e50" stroke-width="3"/>
+            <ellipse cx="110" cy="135" rx="11" ry="6" fill="#ffffff" stroke="#2c3e50" stroke-width="3"/>
+            
+            <ellipse cx="80" cy="162" rx="15" ry="9" fill="#ffffff" stroke="#2c3e50" stroke-width="3"/>
+            <ellipse cx="120" cy="162" rx="15" ry="9" fill="#ffffff" stroke="#2c3e50" stroke-width="3"/>
+          </svg>
+          <div style="font-size: 13px; font-weight: 700; color: #8c68b8; margin-top: -5px;">HAPPY BIRTHDAY</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-section">
+      <div class="passcode-header">Enter a passcode</div>
+      
+      <div class="pin-display-wrapper" id="pinDisplay">
+        <div class="pin-box"></div>
+        <div class="pin-box"></div>
+        <div class="pin-box"></div>
+        <div class="pin-box"></div>
+      </div>
+
+      <div class="keypad-grid">
+        <button class="num-btn" onclick="typeKey('1')">1</button>
+        <button class="num-btn" onclick="typeKey('2')">2</button>
+        <button class="num-btn" onclick="typeKey('3')">3</button>
+        <button class="num-btn" onclick="typeKey('4')">4</button>
+        <button class="num-btn" onclick="typeKey('5')">5</button>
+        <button class="num-btn" onclick="typeKey('6')">6</button>
+        <button class="num-btn" onclick="typeKey('7')">7</button>
+        <button class="num-btn" onclick="typeKey('8')">8</button>
+        <button class="num-btn" onclick="typeKey('9')">9</button>
+        <button class="num-btn" onclick="clearPin()">✱</button>
+        <button class="num-btn" onclick="typeKey('0')">0</button>
+        <button class="num-btn" onclick="submitPin()">#</button>
+      </div>
+    </div>
+
+    <div class="overlay-view" id="letterScreen">
+      <div class="letter-card">
+        <div class="letter-tag">💌 To My Dearest Varsha</div>
+        <h1 class="greeting-title">Happy Birthday, Varsha! 🎂✨</h1>
+        
+        <div class="timeline">
+          <div class="milestone">Day 1 in College 🎓</div>
+          <div class="milestone">Unstoppable Duo 💖</div>
+          <div class="milestone">Forever Besties ♾️</div>
+        </div>
+
+        <p class="greeting-message">
+          Varsha, meeting you on our very first day of college was one of the best parts of my journey. Through every lecture, campus walk, spontaneous laugh and deep conversation, having you as my bestie makes everything special!
+        </p>
+        <div class="greeting-quote">"The first friend I made in college, and my bestie forever." 🌸</div>
+        <button class="action-btn" onclick="showScreen('balloonScreen', 2)">Pop Birthday Balloons 🎈 ➜</button>
+      </div>
+    </div>
+
+    <div class="overlay-view" id="balloonScreen">
+      <h2 style="font-size: 25px; color: #ff6b81; margin-bottom: 4px;">Pop the Balloons, Varsha! 🎈</h2>
+      <p style="font-size: 14px; color: #777;">(Tap each balloon to reveal a birthday wish)</p>
+
+      <div class="balloons-area">
+        <div class="balloon b1" onclick="popBalloon(this, '🌸 Wish #1: Endless happiness, success & radiant smiles!')">🎈</div>
+        <div class="balloon b2" onclick="popBalloon(this, '✈️ Wish #2: Dream trips & lifelong adventures together!')">🎈</div>
+        <div class="balloon b3" onclick="popBalloon(this, '⭐ Wish #3: Massive success in everything you achieve!')">🎈</div>
+        <div class="balloon b4" onclick="popBalloon(this, '💖 Wish #4: Staying inseparable best friends forever!')">🎈</div>
+      </div>
+
+      <div class="balloon-msg" id="balloonMsg">Tap a balloon to pop it! ✨</div>
+      <button class="action-btn" onclick="showScreen('receiptScreen', 3)">View BFF Official Receipt 🧾 ➜</button>
+    </div>
+
+    <div class="overlay-view" id="receiptScreen">
+      <h2 style="font-size: 24px; color: #ff6b81; margin-bottom: 8px;">Official Friendship Receipt 🧾✨</h2>
+      
+      <div class="receipt-box">
+        <div class="receipt-header">
+          BEST FRIENDS OFFICIAL RECEIPT<br>
+          <span style="font-size: 10px; font-weight: normal; color: #777;">ORDER #BFF-VARSHA-FOREVER</span>
+        </div>
+        <div class="receipt-row"><span>First Met In:</span><span>College Day 1 🎓</span></div>
+        <div class="receipt-row"><span>Photos & Memories:</span><span>10,000+ 📸</span></div>
+        <div class="receipt-row"><span>Inside Jokes & Laughs:</span><span>Infinite 😂</span></div>
+        <div class="receipt-row"><span>Support & Loyalty:</span><span>100% Unconditional</span></div>
+        <div class="receipt-total"><span>FINAL BOND:</span><span>LIFETIME BESTIES ♾️</span></div>
+      </div>
+
+      <button class="action-btn" onclick="showScreen('cakeScreen', 4)">Make a Wish & Blow Candles 🕯️ ➜</button>
+    </div>
+
+    <div class="overlay-view" id="cakeScreen">
+      <h2 style="font-size: 26px; color: #ff6b81; margin-bottom: 6px;">Make a Wish, Varsha! 🎂</h2>
+      <p style="font-size: 14px; color: #777;">Tap the cake to blow out your candles 🕯️</p>
+
+      <div class="cake-container" onclick="blowCandles()">
+        <div>
+          <span class="candle-flame" id="flame1">🔥</span>
+          <span class="candle-flame" id="flame2">🔥</span>
+          <span class="candle-flame" id="flame3">🔥</span>
+        </div>
+        <div style="font-size: 70px; margin-top: -10px;">🎂</div>
+      </div>
+
+      <div id="wishMessage" style="font-size: 16px; color: #8c68b8; font-weight: 700; min-height: 24px; margin-bottom: 12px;"></div>
+      <button class="action-btn" onclick="showScreen('galleryScreen', 5)">See Our Memory Album 📸 ➜</button>
+    </div>
+
+    <div class="overlay-view" id="galleryScreen">
+      <h2 style="font-size: 24px; color: #ff6b81; margin-bottom: 6px;">Our Memories, Varsha ✨</h2>
+      
+      <div class="gallery-container">
+        <button class="nav-arrow" onclick="prevSlide()">❮</button>
+        
+        <div class="polaroid-frame">
+          <img id="galleryImg" class="polaroid-img" src="IMG-20241001-WA0000~2.jpg" alt="Memories" />
+          <div id="galleryCaption" class="polaroid-caption">College days & sunny moments together! 🌸</div>
+        </div>
+
+        <button class="nav-arrow" onclick="nextSlide()">❯</button>
+      </div>
+
+      <button class="nav-link" onclick="showScreen('letterScreen', 1)">← Back to Birthday Letter</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Passcode Configuration
+    const CORRECT_CODE = "0109"; 
+
+    // All 6 actual photo files from your project folder
+    const photos = [
+      { src: "pic1.png", caption: "College days & sunny moments together! 🌸" },
+      { src: "pic2.jpg", caption: "Our green hill trip & beautiful views 🌿" },
+      { src: "pic3.jpg", caption: "Endless laughs & silly selfies together 💖" },
+      { src: "pic4.jpg", caption: "College campus vibes side by side ✨" },
+      { src: "pic5.png", caption: "The first friend I made in college 🎓" },
+      { src: "pic6.png", caption: "Unbreakable bond & besties forever, Varsha 💫" }
+    ];
+
+    let currentSlide = 0;
+    let enteredCode = "";
+    const boxes = document.querySelectorAll(".pin-box");
+    const pinDisplay = document.getElementById("pinDisplay");
+    const bgMusic = document.getElementById("bgMusic");
+    const musicBar = document.getElementById("musicBar");
+    const musicStatus = document.getElementById("musicStatus");
+    const stepBar = document.getElementById("stepBar");
+
+    // Click anywhere for floating emojis
+    document.addEventListener('click', (e) => {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      const emojis = ['💖', '✨', '🌸', '🎉', '⭐'];
+      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1200);
+    });
+
+    function typeKey(num) {
+      if (enteredCode.length < 4) {
+        enteredCode += num;
+        renderPin();
+        if (enteredCode.length === 4) setTimeout(verifyCode, 200);
+      }
+    }
+
+    function clearPin() {
+      enteredCode = "";
+      renderPin();
+    }
+
+    function renderPin() {
+      boxes.forEach((box, i) => {
+        if (i < enteredCode.length) {
+          box.textContent = "✱";
+          box.classList.add("filled");
+        } else {
+          box.textContent = "";
+          box.classList.remove("filled");
+        }
+      });
+    }
+
+    function launchConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 130,
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    function verifyCode() {
+      if (enteredCode === CORRECT_CODE) {
+        launchConfetti();
+        musicBar.style.display = "flex";
+        stepBar.style.display = "flex";
+        showScreen('letterScreen', 1);
+        safePlayAudio();
+      } else {
+        pinDisplay.classList.add("shake");
+        setTimeout(() => {
+          pinDisplay.classList.remove("shake");
+          clearPin();
+        }, 400);
+      }
+    }
+
+    function submitPin() {
+      if (enteredCode.length === 4) verifyCode();
+    }
+
+    function showScreen(screenId, stepIndex) {
+      document.querySelectorAll('.overlay-view').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+      
+      for (let i = 1; i <= 5; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (dot) dot.classList.toggle('active', i === stepIndex);
+      }
+
+      if (screenId === 'galleryScreen') updateGallery();
+    }
+
+    function popBalloon(el, msg) {
+      if (!el.classList.contains('popped')) {
+        el.classList.add('popped');
+        document.getElementById('balloonMsg').textContent = msg;
+        launchConfetti();
+      }
+    }
+
+    let candlesBlown = false;
+    function blowCandles() {
+      if (!candlesBlown) {
+        candlesBlown = true;
+        document.getElementById('flame1').classList.add('out');
+        document.getElementById('flame2').classList.add('out');
+        document.getElementById('flame3').classList.add('out');
+        document.getElementById('wishMessage').textContent = "✨ May all your dreams come true, Varsha! ✨";
+        launchConfetti();
+      }
+    }
+
+    function updateGallery() {
+      document.getElementById("galleryImg").src = photos[currentSlide].src;
+      document.getElementById("galleryCaption").textContent = photos[currentSlide].caption;
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + photos.length) % photos.length;
+      updateGallery();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % photos.length;
+      updateGallery();
+    }
+
+    // Audio functions with clean error handling
+    function safePlayAudio() {
+      if (bgMusic && bgMusic.src) {
+        bgMusic.play().then(() => {
+          musicStatus.textContent = "Pause Music";
+        }).catch(() => {
+          // If song.mp3 is missing or autoplay blocked, fail silently without breaking the UI
+          musicStatus.textContent = "Music (Add song.mp3)";
+        });
+      }
+    }
+
+    function toggleAudio() {
+      if (!bgMusic) return;
+      if (bgMusic.paused) {
+        safePlayAudio();
+      } else {
+        bgMusic.pause();
+        musicStatus.textContent = "Play Music";
+      }
+    }
+  </script>
+</body>
+</html>
